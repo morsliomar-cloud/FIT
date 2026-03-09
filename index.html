@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarity - Motivational Progress Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <!-- Google Fonts & Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+<body>
+    <div id="app" class="app-container">
+        <!-- Header -->
+        <header>
+            <h1>Clarity</h1>
+            <button id="settingsBtn" class="icon-btn" aria-label="Settings"><span class="material-icons-round">settings</span></button>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Setup View: Upload Goal Image -->
+            <section id="setupView" class="view active">
+                <div class="upload-container" id="uploadDropzone">
+                    <span class="material-icons-round huge-icon">image_search</span>
+                    <h2>Set Your Vision</h2>
+                    <p>Upload a photo of your ultimate goal to begin tracking your journey.</p>
+                    <input type="file" id="imageUpload" accept="image/*" class="hidden">
+                    <button id="uploadTriggerBtn" class="btn primary-btn">Choose Image</button>
+                </div>
+            </section>
+
+            <!-- Dashboard View: The Tracker -->
+            <section id="dashboardView" class="view hidden">
+                <!-- Visual Feedback Container -->
+                <div class="goal-container">
+                    <img id="goalImage" src="" alt="Goal Image" class="blur-effect">
+                    <div class="progress-overlay">
+                        <span id="progressText" class="progress-value">0%</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button id="progressDownBtn" class="btn secondary-btn danger">
+                        <span class="material-icons-round">remove</span>
+                        I'm further
+                    </button>
+                    <button id="progressUpBtn" class="btn primary-btn success">
+                        <span class="material-icons-round">add</span>
+                        I'm closer
+                    </button>
+                </div>
+
+                <!-- Stats Dashboard -->
+                <div class="stats-panel">
+                    <div class="stat-card">
+                        <span class="material-icons-round">local_fire_department</span>
+                        <div class="stat-info">
+                            <span id="streakCount">0 Days</span>
+                            <label>Current Streak</label>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="material-icons-round">emoji_events</span>
+                        <div class="stat-info">
+                            <span id="maxStreakCount">0 Days</span>
+                            <label>Longest Streak</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Setup Modal Overlay for Penalties/Resets -->
+        <div id="modalOverlay" class="modal-overlay hidden">
+            <div class="modal">
+                <h3 id="modalTitle">Settings</h3>
+                <p id="modalMessage">Configure your application tracking.</p>
+                <div class="modal-actions">
+                    <button id="resetProgressBtn" class="btn danger-btn justify-center">Reset Progress / Start Over</button>
+                    <button id="enableNotificationsBtn" class="btn secondary-btn justify-center">Enable Daily Reminders</button>
+                    <button id="closeModalBtn" class="btn text-btn justify-center" style="margin-top: 0.5rem;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="storage.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then((registration) => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, (err) => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
